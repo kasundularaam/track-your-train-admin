@@ -1,7 +1,7 @@
 import LoginPage from "./components/LoginPage";
 
 import React, { useState } from "react";
-import DashBoardPage from "./components/DashBoardPage";
+import HomePage from "./components/HomePage";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -9,7 +9,7 @@ const App = () => {
 
   return (
     <div>
-      {loggedIn ? <DashBoardPage /> : <LoginPage setLoggedIn={setLoggedIn} />}
+      {loggedIn ? <HomePage /> : <LoginPage setLoggedIn={setLoggedIn} />}
     </div>
   );
 };
