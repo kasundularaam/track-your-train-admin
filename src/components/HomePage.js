@@ -104,10 +104,7 @@ const HomePage = () => {
             </li>
           </ul>
         </div>
-        <div
-          className="col-xs-10 col-sm-10 col-lg-10"
-          style={{ backgroundColor: colors.cyan }}
-        >
+        <div className="col-xs-10 col-sm-10 col-lg-10">
           <div className="tab-content">
             <div
               className={
