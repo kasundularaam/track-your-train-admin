@@ -18,14 +18,7 @@ const HomePage = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row mt-1 mb-2">
-        <div className="col-xs-10 col-sm-10 col-lg-10">
-          <h3 className="text-primary">Track Your Train</h3>
-        </div>
-        <div className="col-xs-2 col-sm-2 col-lg-2">
-          <button className="btn btn-danger">Sign Out</button>
-        </div>
-      </div>
+      <h3 className="text-primary mt-3 mb-3">Track Your Train</h3>
       <div className="row">
         <div className="col-xs-2 col-sm-2 col-lg-2">
           <ul
