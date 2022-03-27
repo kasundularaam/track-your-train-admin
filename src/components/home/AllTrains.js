@@ -3,27 +3,22 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app } from "../../App";
 
 const AllTrains = () => {
-  const db = getFirestore(app);
-
   const [trains, setTrains] = useState([]);
 
-  const trainsCol = collection(db, "users");
-
-  const loadTrains = async () => {
-    let trainList = [];
-    const snapshot = await getDocs(trainsCol);
-    const userList = snapshot.docs.map((doc) => doc.data());
-    userList.forEach((user) => {
-      if (user.userType === "driver") {
-        trainList.push(user);
-      }
-    });
-    setTrains(trainList);
-  };
+  const db = getFirestore(app);
 
   useEffect(() => {
-    loadTrains();
-  });
+    getDocs(collection(db, "users")).then((snapshot) => {
+      const userList = snapshot.docs.map((doc) => doc.data());
+      let trainList = [];
+      userList.forEach((user) => {
+        if (user.userType === "driver") {
+          trainList.push(user);
+        }
+      });
+      setTrains(trainList);
+    });
+  }, [trains]);
 
   return (
     <div>
