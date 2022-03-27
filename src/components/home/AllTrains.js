@@ -26,17 +26,17 @@ const AllTrains = () => {
       <table className="table">
         <thead>
           <tr>
+            <th>Train Name</th>
+            <th>Train Number</th>
             <th>Email</th>
-            <th>Id</th>
-            <th>Name</th>
           </tr>
         </thead>
         <tbody>
           {trains.map((train) => (
             <tr key={train.userId}>
-              <td>{train.userEmail}</td>
-              <td>{train.userId}</td>
               <td>{train.userName}</td>
+              <td>{train.trainId}</td>
+              <td>{train.userEmail}</td>
             </tr>
           ))}
         </tbody>

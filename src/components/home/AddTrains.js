@@ -16,6 +16,31 @@ const AddTrains = () => {
 
   const db = getFirestore(app);
 
+  const clearForm = () => {
+    setTrainName("");
+    setTrainId("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const showFailedMessage = () => {
+    setSucceed(false);
+    setFailed(true);
+    setTimeout(() => {
+      setSucceed(false);
+      setFailed(false);
+    }, 2000);
+  };
+
+  const showSucceedMessage = () => {
+    setFailed(false);
+    setSucceed(true);
+    setTimeout(() => {
+      setSucceed(false);
+      setFailed(false);
+    }, 2000);
+  };
+
   const addTrain = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -28,19 +53,17 @@ const AddTrains = () => {
           userType: "driver",
         })
           .then((data) => {
-            setFailed(false);
-            setSucceed(true);
+            showSucceedMessage();
+            clearForm();
           })
           .catch((error) => {
             console.log(error);
-            setSucceed(false);
-            setFailed(true);
+            showFailedMessage();
           });
       })
       .catch((error) => {
         console.log(error);
-        setSucceed(false);
-        setFailed(true);
+        showFailedMessage();
       });
   };
   return (
@@ -57,6 +80,7 @@ const AddTrains = () => {
               id="inputname"
               className="form-control"
               onChange={(e) => setTrainName(e.target.value)}
+              value={trainName}
             />
           </div>
           <div className="form-outline mb-4 ">
@@ -68,6 +92,7 @@ const AddTrains = () => {
               id="inputid"
               className="form-control"
               onChange={(e) => setTrainId(e.target.value)}
+              value={trainId}
             />
           </div>
           <div className="form-outline mb-4 ">
@@ -79,6 +104,7 @@ const AddTrains = () => {
               id="inputemail"
               className="form-control"
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
 
@@ -91,6 +117,7 @@ const AddTrains = () => {
               id="inputpassword"
               className="form-control"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </div>
 
@@ -112,7 +139,7 @@ const AddTrains = () => {
 const FailedMessage = () => {
   return (
     <div className="alert alert-danger mt-4">
-      <strong>Failed!</strong> Some error occurred!
+      <strong>Failed!</strong> An error occurred!
     </div>
   );
 };
