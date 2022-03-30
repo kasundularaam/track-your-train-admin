@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore/lite";
+import { getFirestore, doc, setDoc } from "firebase/firestore/lite";
 import { app } from "../../App";
 
 const AddTrains = () => {
@@ -45,7 +45,7 @@ const AddTrains = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const uid = userCredential.user.uid;
-        addDoc(collection(db, "users"), {
+        setDoc(doc(db, "users", uid), {
           trainId: trainId,
           userEmail: email,
           userId: uid,
