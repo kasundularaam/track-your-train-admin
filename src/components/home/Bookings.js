@@ -4,55 +4,42 @@ import { app } from "../../App";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const db = getFirestore(app);
 
   useEffect(() => {
-    const loadBookings = async () => {
-      const bookingList = await getDocs(collection(db, "bookings")).then(
-        (snapshot) => {
-          const bookingsList = snapshot.docs.map((doc) => doc.data());
-          return bookingsList;
-        }
-      );
-      setBookings(bookingList);
-      setLoading(false);
-    };
     loadBookings();
-  }, [bookings, loading]);
+  }, []);
 
-  // const refresh = () => {
-  //   const loadTrains = async () => {
-  //     const trainList = await getDocs(collection(db, "users")).then(
-  //       (snapshot) => {
-  //         const userList = snapshot.docs.map((doc) => doc.data());
-  //         let filteredList = [];
-  //         userList.forEach((user) => {
-  //           if (user.userType === "driver") {
-  //             filteredList.push(user);
-  //           }
-  //         });
-  //         return filteredList;
-  //       }
-  //     );
-  //     setTrains(trainList);
-  //     setLoading(false);
-  //   };
-  //   loadTrains();
-  // };
+  const loadBookings = async () => {
+    setLoading(true);
+    const bookingList = await getDocs(collection(db, "bookings")).then(
+      (snapshot) => {
+        const bookingsList = snapshot.docs.map((doc) => doc.data());
+        return bookingsList;
+      }
+    );
+    setBookings(bookingList);
+    setLoading(false);
+  };
 
   return (
     <div>
       <div className="row">
         <h2 className="col">All Trains</h2>
-        {loading ? (
-          <div className="spinner-grow" role="status">
-            <span className="sr-only"></span>
-          </div>
-        ) : (
-          <button className="btn btn-primary col-md-auto">Refresh</button>
-        )}
+        <div className="col-md-auto">
+          {loading ? (
+            <div className="spinner-grow" role="status">
+              <span className="sr-only"></span>
+            </div>
+          ) : (
+            <button className="btn btn-primary " onClick={() => loadBookings()}>
+              Refresh
+            </button>
+          )}
+        </div>
+
         <div className="col-1"></div>
       </div>
       <table className="table mt-4">

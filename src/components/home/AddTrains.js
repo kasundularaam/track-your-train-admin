@@ -11,6 +11,7 @@ const AddTrains = () => {
 
   const [failed, setFailed] = useState(false);
   const [succeed, setSucceed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const auth = getAuth();
 
@@ -42,6 +43,7 @@ const AddTrains = () => {
   };
 
   const addTrain = () => {
+    setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const uid = userCredential.user.uid;
@@ -53,15 +55,18 @@ const AddTrains = () => {
           userType: "driver",
         })
           .then((data) => {
+            setLoading(false);
             showSucceedMessage();
             clearForm();
           })
           .catch((error) => {
+            setLoading(false);
             console.log(error);
             showFailedMessage();
           });
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
         showFailedMessage();
       });
@@ -100,8 +105,9 @@ const AddTrains = () => {
               Email address
             </label>
             <input
-              type="email"
-              id="inputemail"
+              // type="email"
+              id="field3"
+              autocomplete="do-not-autofill"
               className="form-control"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -113,21 +119,28 @@ const AddTrains = () => {
               Password
             </label>
             <input
-              type="password"
-              id="inputpassword"
+              // type="password"
+              autocomplete="do-not-autofill"
+              id="field4"
               className="form-control"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
           </div>
 
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => addTrain()}
-          >
-            Add Train
-          </button>
+          {loading ? (
+            <div className="spinner-grow" role="status">
+              <span className="sr-only"></span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => addTrain()}
+            >
+              Add Train
+            </button>
+          )}
         </form>
       </div>
       {failed ? <FailedMessage /> : null}

@@ -4,49 +4,31 @@ import { app } from "../../App";
 
 const AllTrains = () => {
   const [trains, setTrains] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const db = getFirestore(app);
 
-  useEffect(() => {
-    const loadTrains = async () => {
-      const trainList = await getDocs(collection(db, "users")).then(
-        (snapshot) => {
-          const userList = snapshot.docs.map((doc) => doc.data());
-          let filteredList = [];
-          userList.forEach((user) => {
-            if (user.userType === "driver") {
-              filteredList.push(user);
-            }
-          });
-          return filteredList;
-        }
-      );
-      setTrains(trainList);
-      setLoading(false);
-    };
-    loadTrains();
-  }, [trains, loading]);
+  const loadTrains = async () => {
+    setLoading(true);
+    const trainList = await getDocs(collection(db, "users")).then(
+      (snapshot) => {
+        const userList = snapshot.docs.map((doc) => doc.data());
+        let filteredList = [];
+        userList.forEach((user) => {
+          if (user.userType === "driver") {
+            filteredList.push(user);
+          }
+        });
+        return filteredList;
+      }
+    );
+    setLoading(false);
+    setTrains(trainList);
+  };
 
-  // const refresh = () => {
-  //   const loadTrains = async () => {
-  //     const trainList = await getDocs(collection(db, "users")).then(
-  //       (snapshot) => {
-  //         const userList = snapshot.docs.map((doc) => doc.data());
-  //         let filteredList = [];
-  //         userList.forEach((user) => {
-  //           if (user.userType === "driver") {
-  //             filteredList.push(user);
-  //           }
-  //         });
-  //         return filteredList;
-  //       }
-  //     );
-  //     setTrains(trainList);
-  //     setLoading(false);
-  //   };
-  //   loadTrains();
-  // };
+  useEffect(() => {
+    loadTrains();
+  }, []);
 
   return (
     <div>
@@ -57,7 +39,12 @@ const AllTrains = () => {
             <span className="sr-only"></span>
           </div>
         ) : (
-          <button className="btn btn-primary col-md-auto">Refresh</button>
+          <button
+            className="btn btn-primary col-md-auto"
+            onClick={() => loadTrains()}
+          >
+            Refresh
+          </button>
         )}
         <div className="col-1"></div>
       </div>
