@@ -3,6 +3,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore/lite";
 import { app } from "../../App";
 
+import { Button, Alert, Container, Col, Form, Row } from "react-bootstrap";
+
 const AddTrains = () => {
   const [trainName, setTrainName] = useState("");
   const [trainId, setTrainId] = useState("");
@@ -72,96 +74,87 @@ const AddTrains = () => {
       });
   };
   return (
-    <div>
-      <h2 className="mb-4">Add Trains</h2>
-      <div className="w-25">
-        <form>
-          <div className="form-outline mb-4 ">
-            <label className="form-label" htmlFor="form2Example1">
-              Train Name
-            </label>
-            <input
-              type="name"
-              id="inputname"
-              className="form-control"
-              onChange={(e) => setTrainName(e.target.value)}
-              value={trainName}
-            />
-          </div>
-          <div className="form-outline mb-4 ">
-            <label className="form-label" htmlFor="form2Example1">
-              Train Id
-            </label>
-            <input
-              type="number"
-              id="inputid"
-              className="form-control"
-              onChange={(e) => setTrainId(e.target.value)}
-              value={trainId}
-            />
-          </div>
-          <div className="form-outline mb-4 ">
-            <label className="form-label" htmlFor="form2Example1">
-              Email address
-            </label>
-            <input
-              // type="email"
-              id="field3"
-              autocomplete="do-not-autofill"
-              className="form-control"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
-          </div>
+    <Container>
+      <h2>Add Trains</h2>
 
-          <div className="form-outline mb-4">
-            <label className="form-label" htmlFor="form2Example2">
-              Password
-            </label>
-            <input
-              // type="password"
-              autocomplete="do-not-autofill"
-              id="field4"
-              className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-          </div>
+      <Col>
+        <Form className="px-4 py-4">
+          <Row>
+            <Col></Col>
+            <Col>
+              <Row>
+                {failed ? <FailedMessage /> : null}
+                {succeed ? <SucceedMessage /> : null}
+              </Row>
+              <Form.Group className="mb-3">
+                <Form.Label>Train Name</Form.Label>
+                <Form.Control
+                  type="name"
+                  placeholder="Udarata Manike"
+                  onChange={(e) => setTrainName(e.target.value)}
+                  value={trainName}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Train Id</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="8766"
+                  onChange={(e) => setTrainId(e.target.value)}
+                  value={trainId}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="trainname@tyt.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="* * * * * *"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                ></Form.Control>
+              </Form.Group>
+            </Col>
 
-          {loading ? (
-            <div className="spinner-grow" role="status">
-              <span className="sr-only"></span>
-            </div>
-          ) : (
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => addTrain()}
+            <Col></Col>
+          </Row>
+
+          <Col align="center">
+            <Button
+              variant="primary"
+              disabled={loading}
+              onClick={!loading ? addTrain : null}
             >
-              Add Train
-            </button>
-          )}
-        </form>
-      </div>
-      {failed ? <FailedMessage /> : null}
-      {succeed ? <SucceedMessage /> : null}
-    </div>
+              {loading ? "Loading..." : "Add Train"}
+            </Button>
+          </Col>
+        </Form>
+      </Col>
+    </Container>
   );
 };
 
 const FailedMessage = () => {
   return (
-    <div className="alert alert-danger mt-4">
+    <Alert variant="danger">
       <strong>Failed!</strong> An error occurred!
-    </div>
+    </Alert>
   );
 };
 
 const SucceedMessage = () => {
   return (
-    <div className="alert alert-success mt-4">
+    <Alert variant="success">
       <strong>Succeed!</strong> Train added!
-    </div>
+    </Alert>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app } from "../../App";
+import { Button, Container, Row, Col, Table } from "react-bootstrap";
 
 const AllTrains = () => {
   const [trains, setTrains] = useState([]);
@@ -31,42 +32,42 @@ const AllTrains = () => {
   }, []);
 
   return (
-    <div>
-      <div className="row">
-        <h2 className="col">All Trains</h2>
-        {loading ? (
-          <div className="spinner-grow" role="status">
-            <span className="sr-only"></span>
-          </div>
-        ) : (
-          <button
-            className="btn btn-primary col-md-auto"
-            onClick={() => loadTrains()}
-          >
-            Refresh
-          </button>
-        )}
-        <div className="col-1"></div>
-      </div>
-      <table className="table mt-4">
-        <thead>
-          <tr>
-            <th>Train Name</th>
-            <th>Train Number</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {trains.map((train) => (
-            <tr key={train.userId}>
-              <td>{train.userName}</td>
-              <td>{train.trainId}</td>
-              <td>{train.userEmail}</td>
+    <Container>
+      <Col>
+        <Row>
+          <Col>
+            <h2 className="col">All Trains</h2>
+          </Col>
+          <Col md="auto">
+            <Button
+              variant="primary"
+              disabled={loading}
+              onClick={!loading ? loadTrains : null}
+            >
+              {loading ? "Loading..." : "Refresh"}
+            </Button>
+          </Col>
+        </Row>
+        <Table hover>
+          <thead>
+            <tr>
+              <th>Train Name</th>
+              <th>Train Number</th>
+              <th>Email</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {trains.map((train) => (
+              <tr key={train.userId}>
+                <td>{train.userName}</td>
+                <td>{train.trainId}</td>
+                <td>{train.userEmail}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Col>
+    </Container>
   );
 };
 

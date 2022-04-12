@@ -4,6 +4,7 @@ import Bookings from "./home/Bookings";
 import AllTrains from "./home/AllTrains";
 import Dashboard from "./home/Dashboard";
 import AddTrains from "./home/AddTrains";
+import { Container, Row, Col, Nav } from "react-bootstrap";
 
 const HomePage = () => {
   const [verticalActive, setVerticalActive] = useState("dashboard-tab");
@@ -17,20 +18,25 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <h3 className="text-primary mt-3 mb-3">Track Your Train</h3>
-      <div className="row">
-        <div className="col-xs-2 col-sm-2 col-lg-2">
-          <ul
-            className="nav flex-column nav-pills"
+    <Container fluid style={{ height: "100vh" }}>
+      <Row className="bg-primary text-white" style={{ height: "10vh" }}>
+        <h3 style={{ margin: "auto" }} class="text-center">
+          Track Your Train
+        </h3>
+      </Row>
+      <Row style={{ height: "90vh" }}>
+        <Col md="auto" className="px-4 py-4 bg-dark">
+          <Nav
+            className="flex-column"
+            variant="pills"
             id="myTab"
             role="tablist"
             aria-orientation="vertical"
           >
-            <li className="nav-item">
-              <a
+            <Nav.Item className="mb-2">
+              <Nav.Link
                 className={
-                  "nav-link " +
+                  "px-5 text-white nav-link " +
                   (verticalActive === "dashboard-tab" ? "active" : null)
                 }
                 id="dashboard-tab"
@@ -42,12 +48,12 @@ const HomePage = () => {
                 aria-selected={verticalActive === "dashboard-tab"}
               >
                 Dashboard
-              </a>
-            </li>
-            <li className="nav-item ">
-              <a
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
                 className={
-                  "nav-link " +
+                  "px-5 text-white nav-link " +
                   (verticalActive === "all-trains-tab" ? "active" : null)
                 }
                 id="all-trains-tab"
@@ -59,12 +65,12 @@ const HomePage = () => {
                 aria-selected={verticalActive === "all-trains-tab"}
               >
                 All Trains
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
                 className={
-                  "nav-link " +
+                  "px-5 text-white nav-link " +
                   (verticalActive === "add-trains-tab" ? "active" : null)
                 }
                 id="add-trains-tab"
@@ -76,12 +82,12 @@ const HomePage = () => {
                 aria-selected={verticalActive === "add-trains-tab"}
               >
                 Add Trains
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
                 className={
-                  "nav-link " +
+                  "px-5 text-white nav-link " +
                   (verticalActive === "bookings-tab" ? "active" : null)
                 }
                 id="bookings-tab"
@@ -93,11 +99,11 @@ const HomePage = () => {
                 aria-selected={verticalActive === "bookings-tab"}
               >
                 Bookings
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="col-xs-10 col-sm-10 col-lg-10">
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
+        <Col className="mt-4">
           <div className="tab-content">
             <div
               className={
@@ -144,9 +150,9 @@ const HomePage = () => {
               <Bookings />
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

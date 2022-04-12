@@ -1,8 +1,10 @@
+import { Button, Container, Row, Col, Table } from "react-bootstrap";
+
 const Dashboard = () => {
   return (
-    <div>
+    <Container>
       <h2 className="mb-4">Dashboard</h2>
-    </div>
+    </Container>
   );
 };
 
