@@ -36,7 +36,7 @@ const Bookings = () => {
             <Button
               variant="primary"
               disabled={loading}
-              onClick={!loading ? loadBookings : null}
+              onClick={!loading && loadBookings}
             >
               {loading ? "Loading..." : "Refresh"}
             </Button>

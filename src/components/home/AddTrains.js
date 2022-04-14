@@ -45,36 +45,40 @@ const AddTrains = () => {
   };
 
   const addTrain = () => {
-    setLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const uid = userCredential.user.uid;
-        setDoc(doc(db, "users", uid), {
-          trainId: trainId,
-          userEmail: email,
-          userId: uid,
-          userName: trainName,
-          userType: "driver",
-        })
-          .then((data) => {
-            setLoading(false);
-            showSucceedMessage();
-            clearForm();
+    if (!trainId && !trainName && !email && !password) {
+      showFailedMessage();
+    } else {
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const uid = userCredential.user.uid;
+          setDoc(doc(db, "users", uid), {
+            trainId: trainId,
+            userEmail: email,
+            userId: uid,
+            userName: trainName,
+            userType: "driver",
           })
-          .catch((error) => {
-            setLoading(false);
-            console.log(error);
-            showFailedMessage();
-          });
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-        showFailedMessage();
-      });
+            .then((data) => {
+              setLoading(false);
+              showSucceedMessage();
+              clearForm();
+            })
+            .catch((error) => {
+              setLoading(false);
+              console.log(error);
+              showFailedMessage();
+            });
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+          showFailedMessage();
+        });
+    }
   };
   return (
-    <Container>
+    <Container fluid>
       <h2>Add Trains</h2>
 
       <Col>
@@ -83,45 +87,47 @@ const AddTrains = () => {
             <Col></Col>
             <Col>
               <Row>
-                {failed ? <FailedMessage /> : null}
-                {succeed ? <SucceedMessage /> : null}
+                {failed && <FailedMessage />}
+                {succeed && <SucceedMessage />}
               </Row>
-              <Form.Group className="mb-3">
-                <Form.Label>Train Name</Form.Label>
-                <Form.Control
-                  type="name"
-                  placeholder="Udarata Manike"
-                  onChange={(e) => setTrainName(e.target.value)}
-                  value={trainName}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Train Id</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="8766"
-                  onChange={(e) => setTrainId(e.target.value)}
-                  value={trainId}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="trainname@tyt.com"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="* * * * * *"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                ></Form.Control>
-              </Form.Group>
+              <Form style={{ width: "380px" }}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Train Name</Form.Label>
+                  <Form.Control
+                    type="name"
+                    placeholder="Udarata Manike"
+                    onChange={(e) => setTrainName(e.target.value)}
+                    value={trainName}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Train Id</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="8766"
+                    onChange={(e) => setTrainId(e.target.value)}
+                    value={trainId}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="trainname@tyt.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="* * * * * *"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                  ></Form.Control>
+                </Form.Group>
+              </Form>
             </Col>
 
             <Col></Col>
@@ -131,7 +137,7 @@ const AddTrains = () => {
             <Button
               variant="primary"
               disabled={loading}
-              onClick={!loading ? addTrain : null}
+              onClick={!loading && addTrain}
             >
               {loading ? "Loading..." : "Add Train"}
             </Button>

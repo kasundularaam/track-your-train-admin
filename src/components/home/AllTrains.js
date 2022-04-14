@@ -32,7 +32,7 @@ const AllTrains = () => {
   }, []);
 
   return (
-    <Container>
+    <Container fluid>
       <Col>
         <Row>
           <Col>
@@ -42,7 +42,7 @@ const AllTrains = () => {
             <Button
               variant="primary"
               disabled={loading}
-              onClick={!loading ? loadTrains : null}
+              onClick={!loading && loadTrains}
             >
               {loading ? "Loading..." : "Refresh"}
             </Button>

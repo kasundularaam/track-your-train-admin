@@ -8,8 +8,9 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = (params) => {
+const LoginPage = () => {
   const adminEmail = "admin@tyt.com";
   const adminPassword = "123456";
 
@@ -19,6 +20,7 @@ const LoginPage = (params) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const login = () => {
     setLoading(true);
@@ -27,12 +29,11 @@ const LoginPage = (params) => {
         setLoading(false);
         setFailed(false);
         setSucceed(true);
-        params.setLoggedIn(true);
+        navigate("/home", { replace: true });
       } else {
         setLoading(false);
         setSucceed(false);
         setFailed(true);
-        params.setLoggedIn(false);
       }
     }, 1000);
   };
@@ -78,8 +79,10 @@ const LoginPage = (params) => {
             >
               {loading ? "Loading..." : "Sign In"}
             </Button>
-            {failed ? <FailedMessage /> : null}
-            {succeed ? <SucceedMessage /> : null}
+            <Row className="mt-4">
+              {failed ? <FailedMessage /> : null}
+              {succeed ? <SucceedMessage /> : null}
+            </Row>
           </Card>
         </Col>
         <Col></Col>

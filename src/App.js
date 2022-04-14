@@ -1,9 +1,8 @@
 import LoginPage from "./components/LoginPage";
-
-import React, { useState } from "react";
 import HomePage from "./components/HomePage";
 
 import { initializeApp } from "firebase/app";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCxhWXef7-OjlJ2bQSbEqzaOGmzJva9eek",
@@ -18,13 +17,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  console.log(loggedIn);
-
   return (
-    <div>
-      {loggedIn ? <HomePage /> : <LoginPage setLoggedIn={setLoggedIn} />}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
 };
 

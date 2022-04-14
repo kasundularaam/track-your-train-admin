@@ -1,4 +1,3 @@
-import { colors } from "tabler-react";
 import React, { useState } from "react";
 import Bookings from "./home/Bookings";
 import AllTrains from "./home/AllTrains";
@@ -7,15 +6,7 @@ import AddTrains from "./home/AddTrains";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 
 const HomePage = () => {
-  const [verticalActive, setVerticalActive] = useState("dashboard-tab");
-
-  const handleVerticalClick = (value) => {
-    if (value === verticalActive) {
-      return;
-    }
-
-    setVerticalActive(value);
-  };
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Container fluid style={{ height: "100vh" }}>
@@ -26,26 +17,14 @@ const HomePage = () => {
       </Row>
       <Row style={{ height: "90vh" }}>
         <Col md="auto" className="px-4 py-4 bg-dark">
-          <Nav
-            className="flex-column"
-            variant="pills"
-            id="myTab"
-            role="tablist"
-            aria-orientation="vertical"
-          >
+          <Nav className="flex-column" variant="pills" role="tablist">
             <Nav.Item className="mb-2">
               <Nav.Link
                 className={
-                  "px-5 text-white nav-link " +
-                  (verticalActive === "dashboard-tab" ? "active" : null)
+                  "px-5 text-white nav-link " + (activeTab === 0 && "active")
                 }
-                id="dashboard-tab"
-                data-toggle="tab"
-                href="#dashboard"
-                role="tab"
-                aria-controls="dashboard"
-                onClick={() => handleVerticalClick("dashboard-tab")}
-                aria-selected={verticalActive === "dashboard-tab"}
+                onClick={() => setActiveTab(0)}
+                role="button"
               >
                 Dashboard
               </Nav.Link>
@@ -53,16 +32,10 @@ const HomePage = () => {
             <Nav.Item className="mb-2">
               <Nav.Link
                 className={
-                  "px-5 text-white nav-link " +
-                  (verticalActive === "all-trains-tab" ? "active" : null)
+                  "px-5 text-white nav-link " + (activeTab === 1 && "active")
                 }
-                id="all-trains-tab"
-                data-toggle="tab"
-                href="#alltrains"
-                role="tab"
-                aria-controls="alltrains"
-                onClick={() => handleVerticalClick("all-trains-tab")}
-                aria-selected={verticalActive === "all-trains-tab"}
+                onClick={() => setActiveTab(1)}
+                role="button"
               >
                 All Trains
               </Nav.Link>
@@ -70,33 +43,21 @@ const HomePage = () => {
             <Nav.Item className="mb-2">
               <Nav.Link
                 className={
-                  "px-5 text-white nav-link " +
-                  (verticalActive === "add-trains-tab" ? "active" : null)
+                  "px-5 text-white nav-link " + (activeTab === 2 && "active")
                 }
-                id="add-trains-tab"
-                data-toggle="tab"
-                href="#addtrains"
-                role="tab"
-                aria-controls="addtrains"
-                onClick={() => handleVerticalClick("add-trains-tab")}
-                aria-selected={verticalActive === "add-trains-tab"}
+                onClick={() => setActiveTab(2)}
+                role="button"
               >
                 Add Trains
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item className="mb-2">
+            <Nav.Item>
               <Nav.Link
                 className={
-                  "px-5 text-white nav-link " +
-                  (verticalActive === "bookings-tab" ? "active" : null)
+                  "px-5 text-white nav-link " + (activeTab === 3 && "active")
                 }
-                id="bookings-tab"
-                data-toggle="tab"
-                href="#bookings"
-                role="tab"
-                aria-controls="bookings"
-                onClick={() => handleVerticalClick("bookings-tab")}
-                aria-selected={verticalActive === "bookings-tab"}
+                onClick={() => setActiveTab(3)}
+                role="button"
               >
                 Bookings
               </Nav.Link>
@@ -104,52 +65,10 @@ const HomePage = () => {
           </Nav>
         </Col>
         <Col className="mt-4">
-          <div className="tab-content">
-            <div
-              className={
-                "tab-pane fade " +
-                (verticalActive === "dashboard-tab" ? "show active" : null)
-              }
-              id="dashboard"
-              role="tabpanel"
-              aria-labelledby="dashboard-tab"
-            >
-              <Dashboard />
-            </div>
-            <div
-              className={
-                "tab-pane fade " +
-                (verticalActive === "all-trains-tab" ? "show active" : null)
-              }
-              id="alltrains"
-              role="tabpanel"
-              aria-labelledby="all-trains-tab"
-            >
-              <AllTrains />
-            </div>
-            <div
-              className={
-                "tab-pane fade " +
-                (verticalActive === "add-trains-tab" ? "show active" : null)
-              }
-              id="addtrains"
-              role="tabpanel"
-              aria-labelledby="add-trains-tab"
-            >
-              <AddTrains />
-            </div>
-            <div
-              className={
-                "tab-pane fade " +
-                (verticalActive === "bookings-tab" ? "show active" : null)
-              }
-              id="bookings"
-              role="tabpanel"
-              aria-labelledby="bookings-tab"
-            >
-              <Bookings />
-            </div>
-          </div>
+          {activeTab === 0 && <Dashboard />}
+          {activeTab === 1 && <AllTrains />}
+          {activeTab === 2 && <AddTrains />}
+          {activeTab === 3 && <Bookings />}
         </Col>
       </Row>
     </Container>
